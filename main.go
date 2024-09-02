@@ -9,7 +9,7 @@ func _printf(ptr, size uint32) uint32
 
 //export app_main
 func app() {
-	_printf(convert.StringToWasmPtr("Hello, World!\n"))
+	_printf(convert.StringToWasmPtr("Hello, TinyGo!\n"))
 }
 
 func main() {

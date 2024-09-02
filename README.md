@@ -4,38 +4,59 @@ WebAssembly Micro Runtime (WAMR) compatible WASM module written using TinyGo.
 
 https://github.com/bytecodealliance/wasm-micro-runtime
 
-You can either compile your TinyGo WASM Module targeting WASI Preview 1, or the even smaller WASM Unknown.
 
 ## How to build
 
-For WASI Preview 1, run this command:
+You can either compile your TinyGo WASM Module targeting WASI Preview 1, or the even smaller WASM Unknown.
+
+### WASI Preview 1
+
+To build for WASI Preview 1, run this command:
 
 ```shell
 ./build.sh wasi
 ```
 
-For WASM Unknown, run this command:
+The compiled WASM module will be in the `build` directory:
+
+```shell
+$ ls -l build/test.wasm 
+-rwxrwxr-x 1 ron ron 13697 sep  2 20:45 build/test.wasm
+```
+
+You can use either the `build/test.wasm` file, or the `./build/test_wasm.h` file, by copying it into the directory in which you want to use it from your WAMR application.
+
+### WASM Unknown
+
+To build for WASM Unknown, run this command:
 
 ```shell
 ./build.sh wasmunknown
 ```
 
-Now you can either just use the `build/test.wasm` file, or the `./build/test_wasm.h` by copying it into the directory in which you want to use it.
+The compiled WASM module will be in the `build` directory:
 
+```shell
+$ ls -l build/test.wasm 
+-rwxrwxr-x 1 ron ron 329 sep  2 20:45 build/test.wasm
+```
 
-## Running with `iwasm`
+You can use either the `build/test.wasm` file, or the `./build/test_wasm.h` file, by copying it into the directory in which you want to use it from your WAMR application.
 
-Here is the example running on Linux using the `iwasm` command line tool:
+## Running your compiled module using WAMR
+
+### Running with `iwasm`
+
+Here is the TinyGo module running on Linux using the `iwasm` command line tool:
 
 ```shell
 iwasm -f app_main ./build/test.wasm 
-Hello, World!
+Hello, TinyGo!
 ```
 
 See https://github.com/bytecodealliance/wasm-micro-runtime/tree/main/product-mini#build-iwasm
 
-
-## Running with Zephyr
+### Running with Zephyr
 
 Compiling WAMR on Zephyr for the STM32 Nucleo-144 board
 
@@ -47,7 +68,7 @@ west build -b nucleo_f767zi \
 west flash
 ```
 
-Here is the example running on Zephyr on an STM32 Nucleo-144 board in the `product-mini/platforms/zephyr/simple` example with verbose logging.
+Here is the TinyGo module running on Zephyr on an STM32 Nucleo-144 board in the `product-mini/platforms/zephyr/simple` example with verbose logging.
 
 ```shell
 Connected to /dev/ttyACM0. Press Ctrl-C to exit.
@@ -80,7 +101,7 @@ Connected to /dev/ttyACM0. Press Ctrl-C to exit.
 [00:00:00:111 - 20020E40]: Memory instantiate success.
 [00:00:00:117 - 20020E40]: Calling app_main function
 
-Hello, World!
+Hello, TinyGo!
 result: 0x0
 elapsed: 135
 ```
