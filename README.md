@@ -4,10 +4,20 @@ WebAssembly Micro Runtime (WAMR) compatible WASM module written using TinyGo.
 
 https://github.com/bytecodealliance/wasm-micro-runtime
 
+You can either compile your TinyGo WASM Module targeting WASI Preview 1, or the even smaller WASM Unknown.
+
 ## How to build
 
+For WASI Preview 1, run this command:
+
 ```shell
-./build.sh
+./build.sh wasi
+```
+
+For WASM Unknown, run this command:
+
+```shell
+./build.sh wasmunknown
 ```
 
 Now you can either just use the `build/test.wasm` file, or the `./build/test_wasm.h` by copying it into the directory in which you want to use it.
@@ -27,7 +37,17 @@ See https://github.com/bytecodealliance/wasm-micro-runtime/tree/main/product-min
 
 ## Running with Zephyr
 
-Here is the example running on Zephyr on an STM32 Nucleo-144 board in the `product-mini/platforms/zephyr/simple` example with verbose logging:
+Compiling WAMR on Zephyr for the STM32 Nucleo-144 board
+
+```shell
+west build -b nucleo_f767zi \
+    . -p always -- \
+    -DWAMR_BUILD_TARGET=THUMBV7 \
+    -DWAMR_BUILD_GLOBAL_HEAP_SIZE=262144
+west flash
+```
+
+Here is the example running on Zephyr on an STM32 Nucleo-144 board in the `product-mini/platforms/zephyr/simple` example with verbose logging.
 
 ```shell
 Connected to /dev/ttyACM0. Press Ctrl-C to exit.
