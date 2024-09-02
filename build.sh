@@ -1,9 +1,18 @@
 
 echo "Build wasm app .."
 rm -fr build && mkdir build
-tinygo build -o ./build/test.wasm -target=./hello.json -no-debug main.go
 
-# TODO: make sure we have defined WAMR_DIR to run binarydump
+DEFAULTTARGET=wasi
+TARGET="${1:-$DEFAULTTARGET}"
+
+if [[ $TARGET == "wasmunknown" ]]
+then
+  TARGET="./wamr.json"
+fi
+
+tinygo build -o ./build/test.wasm -target=$TARGET -no-debug main.go
+
+# TODO: allow user to override locations for WAMR_DIR to run binarydump
 WAMR_DIR=~/zephyrproject/wasm-micro-runtime
 echo "Build binarydump tool .."
 cd build
